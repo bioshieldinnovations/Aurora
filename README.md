@@ -49,18 +49,6 @@ Tools
 
     Real-time progress bar
 
-Structure
-
-aurora/
-├── app.py                   # Main Flask server
-├── requirements.txt
-├── modules/
-│   ├── qr_module.py         # QR code generation
-│   ├── crypto_module.py     # Encryption/decryption
-│   └── downloader_module.py # Video/audio downloading
-└── templates/
-    └── index.html           # Web interface
-
 Cryptographic Security
 
 The encryption module uses an Encrypt-then-MAC scheme:
