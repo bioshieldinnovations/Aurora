@@ -1,26 +1,26 @@
 """
-AURORA - Módulo Descargador
-Descarga video/audio desde YouTube, Twitter, Reddit, Vimeo y más vía yt-dlp.
+AURORA - Downloader Module
+Downloads video/audio from YouTube, Twitter, Reddit, Vimeo and more via yt-dlp.
 """
 import os
 import re
 import yt_dlp
 
 
-CARPETA_DEFAULT = os.path.join(os.path.expanduser("~"), "Aurora_Downloads")
+DEFAULT_FOLDER = os.path.join(os.path.expanduser("~"), "Aurora_Downloads")
 
 
 def _sanitize_url(url: str) -> str:
     url = url.strip().strip('"').strip("'")
     if not re.match(r"^https?://", url):
-        raise ValueError("La URL debe comenzar con http:// o https://")
+        raise ValueError("The URL must start with http:// or https://")
     return url
 
 
-def obtener_info(url: str) -> dict:
+def get_info(url: str) -> dict:
     """
-    Obtiene metadatos del video sin descargar.
-    Útil para mostrar preview al usuario.
+    Gets video metadata without downloading.
+    Useful for showing a preview to the user.
     """
     url = _sanitize_url(url)
     opts = {"quiet": True, "no_warnings": True, "skip_download": True}
@@ -28,54 +28,54 @@ def obtener_info(url: str) -> dict:
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=False)
     
-    duracion = info.get("duration", 0)
-    minutos, segundos = divmod(int(duracion), 60)
+    duration = info.get("duration", 0)
+    minutes, seconds = divmod(int(duration), 60)
     
     return {
-        "titulo": info.get("title", "Sin título"),
-        "canal": info.get("uploader", "Desconocido"),
-        "duracion": f"{minutos}:{segundos:02d}",
-        "plataforma": info.get("extractor_key", "Desconocida"),
-        "miniatura": info.get("thumbnail", ""),
+        "title": info.get("title", "No title"),
+        "channel": info.get("uploader", "Unknown"),
+        "duration": f"{minutes}:{seconds:02d}",
+        "platform": info.get("extractor_key", "Unknown"),
+        "thumbnail": info.get("thumbnail", ""),
         "url": url,
     }
 
 
-def descargar(url: str, modo: str = "video", carpeta: str = CARPETA_DEFAULT, 
-              progreso_callback=None) -> dict:
+def download(url: str, mode: str = "video", folder: str = DEFAULT_FOLDER, 
+             progress_callback=None) -> dict:
     """
-    Descarga un video o solo el audio.
+    Downloads a video or just the audio.
     
     Args:
-        url: URL del contenido
-        modo: 'video' para video+audio, 'audio' para solo MP3
-        carpeta: carpeta de destino
-        progreso_callback: función opcional que recibe % de progreso (0-100)
+        url: Content URL
+        mode: 'video' for video+audio, 'audio' for MP3 only
+        folder: destination folder
+        progress_callback: optional function that receives % progress (0-100)
     
     Returns:
-        dict con 'ruta', 'titulo', 'tamanio_mb'
+        dict with 'path', 'title', 'size_mb'
     """
     url = _sanitize_url(url)
-    os.makedirs(carpeta, exist_ok=True)
+    os.makedirs(folder, exist_ok=True)
 
-    resultado = {}
+    result = {}
 
-    def hook_progreso(d):
-        if progreso_callback and d["status"] == "downloading":
+    def progress_hook(d):
+        if progress_callback and d["status"] == "downloading":
             total = d.get("total_bytes") or d.get("total_bytes_estimate", 0)
-            descargado = d.get("downloaded_bytes", 0)
+            downloaded = d.get("downloaded_bytes", 0)
             if total > 0:
-                pct = int((descargado / total) * 100)
-                progreso_callback(pct)
+                pct = int((downloaded / total) * 100)
+                progress_callback(pct)
         elif d["status"] == "finished":
-            resultado["ruta_temp"] = d["filename"]
+            result["temp_path"] = d["filename"]
 
-    plantilla = os.path.join(carpeta, "%(title)s.%(ext)s")
+    template = os.path.join(folder, "%(title)s.%(ext)s")
 
-    if modo == "audio":
+    if mode == "audio":
         opts = {
             "format": "bestaudio/best",
-            "outtmpl": plantilla,
+            "outtmpl": template,
             "postprocessors": [{
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
@@ -83,37 +83,37 @@ def descargar(url: str, modo: str = "video", carpeta: str = CARPETA_DEFAULT,
             }],
             "quiet": True,
             "no_warnings": True,
-            "progress_hooks": [hook_progreso],
+            "progress_hooks": [progress_hook],
             "restrictfilenames": True,
         }
     else:
         opts = {
             "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
-            "outtmpl": plantilla,
+            "outtmpl": template,
             "quiet": True,
             "no_warnings": True,
-            "progress_hooks": [hook_progreso],
+            "progress_hooks": [progress_hook],
             "restrictfilenames": True,
             "merge_output_format": "mp4",
         }
 
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=True)
-        titulo = info.get("title", "archivo")
+        title = info.get("title", "file")
 
-    # Buscar el archivo descargado más reciente
-    archivos = sorted(
-        [os.path.join(carpeta, f) for f in os.listdir(carpeta)],
+    # Find the most recent downloaded file
+    files = sorted(
+        [os.path.join(folder, f) for f in os.listdir(folder)],
         key=os.path.getmtime,
         reverse=True,
     )
-    ruta_final = archivos[0] if archivos else ""
-    tamanio = os.path.getsize(ruta_final) / (1024 * 1024) if ruta_final else 0
+    final_path = files[0] if files else ""
+    size = os.path.getsize(final_path) / (1024 * 1024) if final_path else 0
 
     return {
-        "titulo": titulo,
-        "ruta": ruta_final,
-        "tamanio_mb": round(tamanio, 2),
-        "modo": modo,
-        "carpeta": carpeta,
+        "title": title,
+        "path": final_path,
+        "size_mb": round(size, 2),
+        "mode": mode,
+        "folder": folder,
     }
