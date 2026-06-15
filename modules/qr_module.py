@@ -1,6 +1,6 @@
 """
-AURORA - Módulo QR
-Genera códigos QR a partir de texto, URLs o contenido de archivos.
+AURORA - QR Module
+Generates QR codes from text, URLs, or file content.
 """
 import io
 import base64
@@ -9,23 +9,23 @@ from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.moduledrawers.pil import RoundedModuleDrawer
 
 
-def generar_qr_base64(datos: str, color_fill: str = "#00FFB2", color_back: str = "#0A0E1A") -> dict:
+def generate_qr_base64(data: str, fill_color: str = "#00FFB2", back_color: str = "#0A0E1A") -> dict:
     """
-    Genera un QR y lo devuelve como imagen base64 para renderizar en el frontend.
+    Generates a QR and returns it as a base64 image to render on the frontend.
     
     Returns:
-        dict con 'imagen_b64', 'bytes_datos', 'caracteres'
+        dict with 'image_b64', 'data_bytes', 'characters', 'qr_version'
     """
-    if not datos or not datos.strip():
-        raise ValueError("No se proporcionaron datos para generar el QR.")
+    if not data or not data.strip():
+        raise ValueError("No data was provided to generate the QR.")
 
-    datos = datos.strip()
+    data = data.strip()
     
-    # Seleccionar versión según tamaño de datos
-    if len(datos) <= 50:
+    # Select version based on data size
+    if len(data) <= 50:
         version = 1
         correction = qrcode.constants.ERROR_CORRECT_H
-    elif len(datos) <= 200:
+    elif len(data) <= 200:
         version = None  # auto
         correction = qrcode.constants.ERROR_CORRECT_M
     else:
@@ -38,41 +38,41 @@ def generar_qr_base64(datos: str, color_fill: str = "#00FFB2", color_back: str =
         box_size=12,
         border=3,
     )
-    qr.add_data(datos)
+    qr.add_data(data)
     qr.make(fit=True)
 
-    imagen = qr.make_image(
+    image = qr.make_image(
         image_factory=StyledPilImage,
         module_drawer=RoundedModuleDrawer(),
-        fill_color=color_fill,
-        back_color=color_back,
+        fill_color=fill_color,
+        back_color=back_color,
     )
 
     buffer = io.BytesIO()
-    imagen.save(buffer, format="PNG")
+    image.save(buffer, format="PNG")
     buffer.seek(0)
-    imagen_b64 = base64.b64encode(buffer.read()).decode("utf-8")
+    image_b64 = base64.b64encode(buffer.read()).decode("utf-8")
 
     return {
-        "imagen_b64": imagen_b64,
-        "caracteres": len(datos),
-        "bytes_datos": len(datos.encode("utf-8")),
-        "version_qr": qr.version,
+        "image_b64": image_b64,
+        "characters": len(data),
+        "data_bytes": len(data.encode("utf-8")),
+        "qr_version": qr.version,
     }
 
 
-def generar_qr_desde_archivo(ruta: str) -> dict:
-    """Lee un archivo de texto y genera QR de su contenido."""
+def generate_qr_from_file(path: str) -> dict:
+    """Reads a text file and generates a QR code from its content."""
     import os
-    if not os.path.exists(ruta):
-        raise FileNotFoundError(f"Archivo no encontrado: {ruta}")
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"File not found: {path}")
 
-    with open(ruta, "r", encoding="utf-8") as f:
-        contenido = f.read()
+    with open(path, "r", encoding="utf-8") as f:
+        content = f.read()
 
-    if not contenido.strip():
-        raise ValueError("El archivo está vacío.")
+    if not content.strip():
+        raise ValueError("The file is empty.")
 
-    resultado = generar_qr_base64(contenido)
-    resultado["fuente"] = os.path.basename(ruta)
-    return resultado
+    result = generate_qr_base64(content)
+    result["source"] = os.path.basename(path)
+    return result
