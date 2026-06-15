@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AURORA SUITE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --cosmos:     #050810;
+  --deep:       #0A0E1A;
+  --surface:    #101628;
+  --card:       #141B2D;
+  --border:     #1E2A45;
+  --aurora-g:   #00FFB2;
+  --aurora-c:   #00C9FF;
+  --aurora-v:   #9B5DE5;
+  --aurora-p:   #FF6EC7;
+  --aurora-y:   #F0E66A;
+  --text:       #E8EDF8;
+  --muted:      #5A6A8A;
+  --danger:     #FF4B6E;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+/* ─── RESET ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-display);
+  background: var(--cosmos);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── AURORA BACKGROUND ──────────────────────────────────── */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora-layer {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  animation: aurora-drift 18s ease-in-out infinite alternate;
+}
+
+.aurora-layer:nth-child(1) {
+  width: 900px; height: 400px;
+  background: radial-gradient(ellipse, var(--aurora-g), transparent 70%);
+  top: -100px; left: -200px;
+  animation-duration: 20s;
+}
+.aurora-layer:nth-child(2) {
+  width: 700px; height: 350px;
+  background: radial-gradient(ellipse, var(--aurora-v), transparent 70%);
+  top: 0px; right: -100px;
+  animation-duration: 25s;
+  animation-delay: -7s;
+}
+.aurora-layer:nth-child(3) {
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, var(--aurora-c), transparent 70%);
+  top: 150px; left: 30%;
+  animation-duration: 22s;
+  animation-delay: -12s;
+}
+.aurora-layer:nth-child(4) {
+  width: 500px; height: 250px;
+  background: radial-gradient(ellipse, var(--aurora-p), transparent 70%);
+  top: 80px; right: 20%;
+  animation-duration: 30s;
+  animation-delay: -5s;
+  opacity: 0.07;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(60px, 30px) scale(1.08); }
+  66%  { transform: translate(-40px, 50px) scale(0.95); }
+  100% { transform: translate(30px, -20px) scale(1.05); }
+}
+
+/* ─── LAYOUT ─────────────────────────────────────────────── */
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ─── HEADER ─────────────────────────────────────────────── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 0 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo-wordmark {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: linear-gradient(90deg, var(--aurora-g), var(--aurora-c) 40%, var(--aurora-v));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--aurora-g);
+  box-shadow: 0 0 8px var(--aurora-g);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ─── HERO ───────────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--aurora-g);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: clamp(42px, 7vw, 80px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.hero-title .line-dim { color: var(--muted); font-weight: 300; }
+.hero-title .line-bright {
+  background: linear-gradient(135deg, var(--aurora-g) 0%, var(--aurora-c) 45%, var(--aurora-v) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  max-width: 520px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ─── NAV TABS ───────────────────────────────────────────── */
+.tool-nav {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 5px;
+  margin-bottom: 40px;
+}
+
+.tool-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+
+.tool-tab:hover { color: var(--text); background: var(--card); }
+
+.tool-tab.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.tool-tab.active .tab-icon { filter: drop-shadow(0 0 6px currentColor); }
+.tool-tab[data-tool="qr"].active     { color: var(--aurora-g); }
+.tool-tab[data-tool="crypto"].active { color: var(--aurora-v); }
+.tool-tab[data-tool="dl"].active     { color: var(--aurora-c); }
+
+.tab-icon { font-size: 16px; }
+.tab-label { font-size: 13px; }
+
+/* ─── TOOL PANELS ────────────────────────────────────────── */
+.tool-panel { display: none; animation: panel-in 0.3s ease; }
+.tool-panel.active { display: block; }
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── CARD ───────────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.card-title.g { color: var(--aurora-g); }
+.card-title.v { color: var(--aurora-v); }
+.card-title.c { color: var(--aurora-c); }
+.card-title.p { color: var(--aurora-p); }
+
+/* ─── FORM ELEMENTS ──────────────────────────────────────── */
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="url"],
+textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: vertical;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--aurora-g);
+  box-shadow: 0 0 0 3px rgba(0, 255, 178, 0.08);
+}
+
+.field { margin-bottom: 20px; }
+
+/* ─── BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 10px;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--aurora-g), var(--aurora-c));
+  color: var(--cosmos);
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 255, 178, 0.25);
+}
+
+.btn-purple {
+  background: linear-gradient(135deg, var(--aurora-v), #7B2FBE);
+  color: #fff;
+}
+.btn-purple:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(155, 93, 229, 0.3);
+}
+
+.btn-cyan {
+  background: linear-gradient(135deg, var(--aurora-c), #0080CC);
+  color: var(--cosmos);
+}
+.btn-cyan:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 201, 255, 0.25);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.btn-ghost:hover:not(:disabled) { border-color: var(--aurora-g); color: var(--aurora-g); }
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* ─── OUTPUT BOXES ───────────────────────────────────────── */
+.output-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--aurora-g);
+  word-break: break-all;
+  min-height: 56px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.output-box.error { color: var(--danger); border-color: rgba(255,75,110,0.3); }
+.output-box.muted { color: var(--muted); }
+
+.copy-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover { color: var(--aurora-g); border-color: var(--aurora-g); }
+
+/* ─── QR PANEL ───────────────────────────────────────────── */
+.qr-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  align-items: start;
+}
+
+.qr-preview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  gap: 16px;
+}
+
+.qr-preview img {
+  border-radius: 12px;
+  max-width: 240px;
+  width: 100%;
+}
+
+.qr-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.qr-placeholder-icon {
+  width: 80px; height: 80px;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.qr-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ─── RADIO TOGGLE ───────────────────────────────────────── */
+.toggle-group {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.toggle-opt {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+}
+
+.toggle-opt.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+/* ─── PROGRESS BAR ───────────────────────────────────────── */
+.progress-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  height: 6px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--aurora-g), var(--aurora-c));
+  width: 0%;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 10px rgba(0,255,178,0.5);
+}
+
+/* ─── VIDEO PREVIEW ──────────────────────────────────────── */
+.video-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  margin-bottom: 20px;
+}
+
+.video-card.visible { display: block; }
+
+.video-card-inner {
+  display: flex;
+  gap: 0;
+}
+
+.video-thumb {
+  width: 160px;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: var(--card);
+}
+
+.video-info {
+  padding: 20px;
+  flex: 1;
+}
+
+.video-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.video-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.video-badge {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+/* ─── SUCCESS STATE ──────────────────────────────────────── */
+.success-banner {
+  background: rgba(0, 255, 178, 0.06);
+  border: 1px solid rgba(0, 255, 178, 0.2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--aurora-g);
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+.success-banner.visible { display: flex; }
+
+.error-banner {
+  background: rgba(255, 75, 110, 0.06);
+  border: 1px solid rgba(255, 75, 110, 0.2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--danger);
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+.error-banner.visible { display: flex; }
+
+/* ─── DIVIDER ─────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+/* ─── COLOR PICKERS ──────────────────────────────────────── */
+.color-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.color-field { flex: 1; }
+.color-field input[type="color"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 4px;
+  cursor: pointer;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+}
+
+/* ─── SPINNER ─────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .qr-layout { grid-template-columns: 1fr; }
+  .tool-tab .tab-label { display: none; }
+  .video-card-inner { flex-direction: column; }
+  .video-thumb { width: 100%; height: 160px; }
+  header { flex-direction: column; gap: 16px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="aurora-bg">
+  <div class="aurora-layer"></div>
+  <div class="aurora-layer"></div>
+  <div class="aurora-layer"></div>
+  <div class="aurora-layer"></div>
+</div>
+
+<div class="shell">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <span class="logo-wordmark">AURORA</span>
+      <span class="logo-sub">Suite de Herramientas · v2.0</span>
+    </div>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      <span>Sistema activo</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">Herramientas que trabajan para ti</p>
+    <h1 class="hero-title">
+      <span class="line-dim">Crea. Protege.</span><br>
+      <span class="line-bright">Descarga.</span>
+    </h1>
+    <p class="hero-desc">
+      Una suite completa construida en Python. QR codes personalizados, cifrado criptográfico sin dependencias y descarga de video universal.
+    </p>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav class="tool-nav" role="tablist">
+    <button class="tool-tab active" data-tool="qr" onclick="switchTab('qr')" role="tab">
+      <span class="tab-icon">⬡</span>
+      <span class="tab-label">Generador QR</span>
+    </button>
+    <button class="tool-tab" data-tool="crypto" onclick="switchTab('crypto')" role="tab">
+      <span class="tab-icon">◈</span>
+      <span class="tab-label">Cifrador</span>
+    </button>
+    <button class="tool-tab" data-tool="dl" onclick="switchTab('dl')" role="tab">
+      <span class="tab-icon">↓</span>
+      <span class="tab-label">Descargador</span>
+    </button>
+  </nav>
+
+  <!-- ═══ QR PANEL ═══════════════════════════════════════ -->
+  <div id="panel-qr" class="tool-panel active">
+    <div class="qr-layout">
+      <!-- Controles -->
+      <div>
+        <div class="card">
+          <p class="card-title g">Contenido del QR</p>
+
+          <div class="field">
+            <label>URL o texto</label>
+            <textarea id="qr-input" rows="4" placeholder="https://ejemplo.com  ó  cualquier texto..."></textarea>
+          </div>
+
+          <div class="color-row">
+            <div class="color-field">
+              <label>Color del código</label>
+              <input type="color" id="qr-color-fill" value="#00FFB2">
+            </div>
+            <div class="color-field">
+              <label>Color de fondo</label>
+              <input type="color" id="qr-color-back" value="#0A0E1A">
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="generarQR()" id="btn-generar-qr">
+              <span>Generar QR</span>
+            </button>
+            <button class="btn btn-ghost" onclick="limpiarQR()">Limpiar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div>
+        <div class="card" style="padding: 20px;">
+          <p class="card-title g">Vista previa</p>
+          <div class="qr-preview" id="qr-preview">
+            <div class="qr-placeholder">
+              <div class="qr-placeholder-icon">⬡</div>
+              <p style="font-size:12px;">El QR aparecerá aquí</p>
+            </div>
+          </div>
+          <div id="qr-meta" class="qr-meta" style="margin-top:12px; display:none;"></div>
+          <button class="btn btn-ghost" id="btn-dl-qr" onclick="descargarQR()" style="width:100%;margin-top:12px;display:none;">
+            ↓ Descargar PNG
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CRYPTO PANEL ════════════════════════════════════ -->
+  <div id="panel-crypto" class="tool-panel">
+
+    <!-- Modo -->
+    <div class="toggle-group">
+      <button class="toggle-opt active" onclick="setCryptoMode('enc')" id="tog-enc">Encriptar</button>
+      <button class="toggle-opt" onclick="setCryptoMode('dec')" id="tog-dec">Desencriptar</button>
+    </div>
+
+    <!-- Encriptar -->
+    <div id="crypto-enc-panel">
+      <div class="card">
+        <p class="card-title v">Encriptar mensaje</p>
+        <div class="field">
+          <label>Mensaje secreto</label>
+          <textarea id="enc-mensaje" rows="4" placeholder="Escribe aquí el texto que quieres cifrar..."></textarea>
+        </div>
+        <div class="field">
+          <label>Contraseña</label>
+          <input type="password" id="enc-password" placeholder="Clave de cifrado (guárdala bien)" />
+        </div>
+        <button class="btn btn-purple" onclick="encriptar()" id="btn-enc">
+          <span>Cifrar mensaje</span>
+        </button>
+      </div>
+
+      <div class="card">
+        <p class="card-title v">Token cifrado</p>
+        <div class="output-box muted" id="enc-output" style="padding-right:80px;">
+          El token aparecerá aquí…
+          <button class="copy-btn" onclick="copiar('enc-output')">Copiar</button>
+        </div>
+        <div id="enc-error" class="error-banner"></div>
+      </div>
+    </div>
+
+    <!-- Desencriptar -->
+    <div id="crypto-dec-panel" style="display:none;">
+      <div class="card">
+        <p class="card-title p">Desencriptar mensaje</p>
+        <div class="field">
+          <label>Token hexadecimal</label>
+          <textarea id="dec-token" rows="4" placeholder="Pega aquí el token cifrado..."></textarea>
+        </div>
+        <div class="field">
+          <label>Contraseña</label>
+          <input type="password" id="dec-password" placeholder="La misma clave usada para cifrar" />
+        </div>
+        <button class="btn btn-purple" onclick="desencriptar()" id="btn-dec">
+          <span>Descifrar mensaje</span>
+        </button>
+      </div>
+
+      <div class="card">
+        <p class="card-title p">Mensaje descifrado</p>
+        <div class="output-box muted" id="dec-output" style="padding-right:80px;">
+          El mensaje original aparecerá aquí…
+          <button class="copy-btn" onclick="copiar('dec-output')">Copiar</button>
+        </div>
+        <div id="dec-error" class="error-banner"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ DOWNLOADER PANEL ════════════════════════════════ -->
+  <div id="panel-dl" class="tool-panel">
+
+    <div class="card">
+      <p class="card-title c">URL del video</p>
+      <div class="field">
+        <label>Enlace</label>
+        <input type="url" id="dl-url" placeholder="https://youtube.com/watch?v=... · Twitter · Reddit · Vimeo · y más"
+               oninput="resetDLState()" />
+      </div>
+
+      <div class="toggle-group" style="margin-bottom:0;">
+        <button class="toggle-opt active" onclick="setDLMode('video')" id="tog-video">Video MP4</button>
+        <button class="toggle-opt" onclick="setDLMode('audio')" id="tog-audio">Solo Audio MP3</button>
+      </div>
+    </div>
+
+    <!-- Preview de video -->
+    <div class="video-card" id="video-card">
+      <div class="video-card-inner">
+        <img id="video-thumb" class="video-thumb" src="" alt="miniatura" />
+        <div class="video-info">
+          <p class="video-title" id="video-title"></p>
+          <div class="video-meta">
+            <span class="video-badge" id="video-canal"></span>
+            <span class="video-badge" id="video-dur"></span>
+            <span class="video-badge" id="video-plat"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="previewVideo()" id="btn-preview">
+        <span>Vista previa</span>
+      </button>
+      <button class="btn btn-cyan" onclick="iniciarDescarga()" id="btn-descargar" disabled>
+        <span>Descargar</span>
+      </button>
+    </div>
+
+    <!-- Progreso -->
+    <div id="dl-progress-wrap" style="display:none; margin-top:20px;">
+      <div class="progress-wrap">
+        <div class="progress-bar" id="dl-progress-bar"></div>
+      </div>
+      <p id="dl-progress-label" style="font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:6px; text-align:center;">
+        Descargando...
+      </p>
+    </div>
+
+    <div id="dl-success" class="success-banner">
+      <span>✦</span>
+      <span id="dl-success-msg"></span>
+    </div>
+    <div id="dl-error" class="error-banner">
+      <span>✕</span>
+      <span id="dl-error-msg"></span>
+    </div>
+
+  </div>
+
+  <footer>
+    AURORA SUITE · Construido con Python + Flask · Herramientas para todos
+  </footer>
+</div>
+
+<script>
+// ─── GLOBALS ──────────────────────────────────────────────
+const API = '';  // mismo origen
+let qrImageB64 = null;
+let dlMode = 'video';
+let cryptoMode = 'enc';
+let dlPolling = null;
+
+// ─── TAB SWITCHING ────────────────────────────────────────
+function switchTab(tool) {
+  document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`[data-tool="${tool}"]`).classList.add('active');
+  document.getElementById(`panel-${tool}`).classList.add('active');
+}
+
+// ─── QR ───────────────────────────────────────────────────
+async function generarQR() {
+  const datos = document.getElementById('qr-input').value.trim();
+  const color_fill = document.getElementById('qr-color-fill').value;
+  const color_back = document.getElementById('qr-color-back').value;
+  const btn = document.getElementById('btn-generar-qr');
+
+  if (!datos) { shake(document.getElementById('qr-input')); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Generando…';
+
+  try {
+    const res = await fetch(`${API}/api/qr/generar`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({datos, color_fill, color_back})
+    });
+    const data = await res.json();
+
+    if (data.error) throw new Error(data.error);
+
+    qrImageB64 = data.imagen_b64;
+    const preview = document.getElementById('qr-preview');
+    preview.innerHTML = `<img src="data:image/png;base64,${qrImageB64}" alt="QR Code" />`;
+
+    const meta = document.getElementById('qr-meta');
+    meta.textContent = `${data.caracteres} caracteres · versión QR ${data.version_qr} · ${data.bytes_datos} bytes`;
+    meta.style.display = 'block';
+    document.getElementById('btn-dl-qr').style.display = 'block';
+
+  } catch (e) {
+    document.getElementById('qr-preview').innerHTML = 
+      `<div class="qr-placeholder"><div class="qr-placeholder-icon" style="border-color:var(--danger)">✕</div><p style="color:var(--danger);font-size:12px;">${e.message}</p></div>`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Generar QR</span>';
+  }
+}
+
+function limpiarQR() {
+  document.getElementById('qr-input').value = '';
+  document.getElementById('qr-preview').innerHTML = `
+    <div class="qr-placeholder">
+      <div class="qr-placeholder-icon">⬡</div>
+      <p style="font-size:12px;">El QR aparecerá aquí</p>
+    </div>`;
+  document.getElementById('qr-meta').style.display = 'none';
+  document.getElementById('btn-dl-qr').style.display = 'none';
+  qrImageB64 = null;
+}
+
+function descargarQR() {
+  if (!qrImageB64) return;
+  const a = document.createElement('a');
+  a.href = `data:image/png;base64,${qrImageB64}`;
+  a.download = 'aurora_qr.png';
+  a.click();
+}
+
+// ─── CRYPTO ───────────────────────────────────────────────
+function setCryptoMode(mode) {
+  cryptoMode = mode;
+  document.getElementById('crypto-enc-panel').style.display = mode === 'enc' ? 'block' : 'none';
+  document.getElementById('crypto-dec-panel').style.display = mode === 'dec' ? 'block' : 'none';
+  document.getElementById('tog-enc').classList.toggle('active', mode === 'enc');
+  document.getElementById('tog-dec').classList.toggle('active', mode === 'dec');
+}
+
+async function encriptar() {
+  const mensaje = document.getElementById('enc-mensaje').value;
+  const password = document.getElementById('enc-password').value;
+  const btn = document.getElementById('btn-enc');
+  const out = document.getElementById('enc-output');
+  const err = document.getElementById('enc-error');
+
+  if (!mensaje || !password) { shake(btn); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Cifrando…';
+  err.classList.remove('visible');
+
+  try {
+    const res = await fetch(`${API}/api/crypto/encriptar`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({mensaje, password})
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    out.classList.remove('muted', 'error');
+    out.innerHTML = `${data.token}<button class="copy-btn" onclick="copiar('enc-output')">Copiar</button>`;
+    out.style.color = 'var(--aurora-g)';
+  } catch (e) {
+    err.textContent = e.message;
+    err.classList.add('visible');
+    err.innerHTML = `<span>✕</span><span>${e.message}</span>`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Cifrar mensaje</span>';
+  }
+}
+
+async function desencriptar() {
+  const token = document.getElementById('dec-token').value;
+  const password = document.getElementById('dec-password').value;
+  const btn = document.getElementById('btn-dec');
+  const out = document.getElementById('dec-output');
+  const err = document.getElementById('dec-error');
+
+  if (!token || !password) { shake(btn); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Descifrando…';
+  err.classList.remove('visible');
+
+  try {
+    const res = await fetch(`${API}/api/crypto/desencriptar`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({token, password})
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    out.classList.remove('muted', 'error');
+    out.innerHTML = `${data.mensaje}<button class="copy-btn" onclick="copiar('dec-output')">Copiar</button>`;
+    out.style.color = 'var(--aurora-p)';
+  } catch (e) {
+    err.innerHTML = `<span>✕</span><span>${e.message}</span>`;
+    err.classList.add('visible');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Descifrar mensaje</span>';
+  }
+}
+
+// ─── DOWNLOADER ───────────────────────────────────────────
+function setDLMode(mode) {
+  dlMode = mode;
+  document.getElementById('tog-video').classList.toggle('active', mode === 'video');
+  document.getElementById('tog-audio').classList.toggle('active', mode === 'audio');
+}
+
+function resetDLState() {
+  document.getElementById('video-card').classList.remove('visible');
+  document.getElementById('btn-descargar').disabled = true;
+  document.getElementById('dl-success').classList.remove('visible');
+  document.getElementById('dl-error').classList.remove('visible');
+  document.getElementById('dl-progress-wrap').style.display = 'none';
+  if (dlPolling) clearInterval(dlPolling);
+}
+
+async function previewVideo() {
+  const url = document.getElementById('dl-url').value.trim();
+  const btn = document.getElementById('btn-preview');
+  if (!url) { shake(document.getElementById('dl-url')); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Obteniendo info…';
+
+  try {
+    const res = await fetch(`${API}/api/downloader/info`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({url})
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    document.getElementById('video-title').textContent = data.titulo;
+    document.getElementById('video-canal').textContent = data.canal;
+    document.getElementById('video-dur').textContent = data.duracion;
+    document.getElementById('video-plat').textContent = data.plataforma;
+
+    const thumb = document.getElementById('video-thumb');
+    if (data.miniatura) { thumb.src = data.miniatura; thumb.style.display = 'block'; }
+    else { thumb.style.display = 'none'; }
+
+    document.getElementById('video-card').classList.add('visible');
+    document.getElementById('btn-descargar').disabled = false;
+    document.getElementById('dl-error').classList.remove('visible');
+  } catch (e) {
+    document.getElementById('dl-error').innerHTML = `<span>✕</span><span>${e.message}</span>`;
+    document.getElementById('dl-error').classList.add('visible');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Vista previa</span>';
+  }
+}
+
+async function iniciarDescarga() {
+  const url = document.getElementById('dl-url').value.trim();
+  if (!url) return;
+
+  const btn = document.getElementById('btn-descargar');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Iniciando…';
+  document.getElementById('dl-success').classList.remove('visible');
+  document.getElementById('dl-error').classList.remove('visible');
+  document.getElementById('dl-progress-wrap').style.display = 'block';
+  document.getElementById('dl-progress-bar').style.width = '0%';
+  document.getElementById('dl-progress-label').textContent = 'Conectando…';
+
+  try {
+    await fetch(`${API}/api/downloader/descargar`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({url, modo: dlMode})
+    });
+
+    // Polling de estado
+    dlPolling = setInterval(async () => {
+      const r = await fetch(`${API}/api/downloader/estado`);
+      const estado = await r.json();
+
+      document.getElementById('dl-progress-bar').style.width = `${estado.progreso}%`;
+      document.getElementById('dl-progress-label').textContent = 
+        estado.estado === 'descargando' ? `${estado.progreso}% descargado…` : estado.estado;
+
+      if (estado.estado === 'completado') {
+        clearInterval(dlPolling);
+        document.getElementById('dl-progress-wrap').style.display = 'none';
+        document.getElementById('dl-success-msg').textContent = 
+          `✦ Descarga completa: ${estado.resultado.titulo} · ${estado.resultado.tamanio_mb} MB · ${estado.resultado.ruta}`;
+        document.getElementById('dl-success').classList.add('visible');
+        btn.disabled = false;
+        btn.innerHTML = '<span>Descargar</span>';
+      } else if (estado.estado === 'error') {
+        clearInterval(dlPolling);
+        document.getElementById('dl-progress-wrap').style.display = 'none';
+        document.getElementById('dl-error-msg').textContent = estado.error;
+        document.getElementById('dl-error').classList.add('visible');
+        btn.disabled = false;
+        btn.innerHTML = '<span>Descargar</span>';
+      }
+    }, 800);
+
+  } catch (e) {
+    document.getElementById('dl-error-msg').textContent = e.message;
+    document.getElementById('dl-error').classList.add('visible');
+    btn.disabled = false;
+    btn.innerHTML = '<span>Descargar</span>';
+  }
+}
+
+// ─── HELPERS ──────────────────────────────────────────────
+async function copiar(id) {
+  const el = document.getElementById(id);
+  const text = el.childNodes[0]?.textContent?.trim() || el.textContent.trim();
+  try {
+    await navigator.clipboard.writeText(text);
+    const btn = el.querySelector('.copy-btn');
+    if (btn) { btn.textContent = '¡Copiado!'; setTimeout(() => btn.textContent = 'Copiar', 1500); }
+  } catch {}
+}
+
+function shake(el) {
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = 'shake 0.35s ease';
+  setTimeout(() => el.style.animation = '', 350);
+}
+
+// Animación shake
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-8px); }
+    40%      { transform: translateX(8px); }
+    60%      { transform: translateX(-5px); }
+    80%      { transform: translateX(5px); }
+  }
+`;
+document.head.appendChild(style);
+
+// Enter en inputs
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.ctrlKey) {
+    const active = document.querySelector('.tool-panel.active');
+    if (active.id === 'panel-qr') generarQR();
+    else if (active.id === 'panel-crypto') cryptoMode === 'enc' ? encriptar() : desencriptar();
+  }
+});
+</script>
+</body>
+</html>
