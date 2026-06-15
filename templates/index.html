@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -658,156 +658,146 @@ footer {
 
 <div class="shell">
 
-  <!-- HEADER -->
   <header>
     <div class="logo">
       <span class="logo-wordmark">AURORA</span>
-      <span class="logo-sub">Suite de Herramientas · v2.0</span>
+      <span class="logo-sub">Tool Suite · v2.0</span>
     </div>
     <div class="status-pill">
       <span class="status-dot"></span>
-      <span>Sistema activo</span>
+      <span>System active</span>
     </div>
   </header>
 
-  <!-- HERO -->
   <div class="hero">
-    <p class="hero-eyebrow">Herramientas que trabajan para ti</p>
+    <p class="hero-eyebrow">Tools designed to work for you</p>
     <h1 class="hero-title">
-      <span class="line-dim">Crea. Protege.</span><br>
-      <span class="line-bright">Descarga.</span>
+      <span class="line-dim">Browse while</span><br>
+      <span class="line-bright">protected.</span>
     </h1>
     <p class="hero-desc">
-      Una suite completa construida en Python. QR codes personalizados, cifrado criptográfico sin dependencias y descarga de video universal.
+      A complete suite powered by Python. Customized QR codes, dependency-free cryptographic encryption, and universal video downloading.
     </p>
   </div>
 
-  <!-- NAVIGATION -->
   <nav class="tool-nav" role="tablist">
     <button class="tool-tab active" data-tool="qr" onclick="switchTab('qr')" role="tab">
       <span class="tab-icon">⬡</span>
-      <span class="tab-label">Generador QR</span>
+      <span class="tab-label">QR Generator</span>
     </button>
     <button class="tool-tab" data-tool="crypto" onclick="switchTab('crypto')" role="tab">
       <span class="tab-icon">◈</span>
-      <span class="tab-label">Cifrador</span>
+      <span class="tab-label">Encryptor</span>
     </button>
     <button class="tool-tab" data-tool="dl" onclick="switchTab('dl')" role="tab">
       <span class="tab-icon">↓</span>
-      <span class="tab-label">Descargador</span>
+      <span class="tab-label">Downloader</span>
     </button>
   </nav>
 
-  <!-- ═══ QR PANEL ═══════════════════════════════════════ -->
   <div id="panel-qr" class="tool-panel active">
     <div class="qr-layout">
-      <!-- Controles -->
       <div>
         <div class="card">
-          <p class="card-title g">Contenido del QR</p>
+          <p class="card-title g">QR Content</p>
 
           <div class="field">
-            <label>URL o texto</label>
-            <textarea id="qr-input" rows="4" placeholder="https://ejemplo.com  ó  cualquier texto..."></textarea>
+            <label>URL or text</label>
+            <textarea id="qr-input" rows="4" placeholder="https://example.com  or  any text..."></textarea>
           </div>
 
           <div class="color-row">
             <div class="color-field">
-              <label>Color del código</label>
+              <label>Code Color</label>
               <input type="color" id="qr-color-fill" value="#00FFB2">
             </div>
             <div class="color-field">
-              <label>Color de fondo</label>
+              <label>Background Color</label>
               <input type="color" id="qr-color-back" value="#0A0E1A">
             </div>
           </div>
 
           <div class="btn-row">
             <button class="btn btn-primary" onclick="generarQR()" id="btn-generar-qr">
-              <span>Generar QR</span>
+              <span>Generate QR</span>
             </button>
-            <button class="btn btn-ghost" onclick="limpiarQR()">Limpiar</button>
+            <button class="btn btn-ghost" onclick="limpiarQR()">Clear</button>
           </div>
         </div>
       </div>
 
-      <!-- Preview -->
       <div>
         <div class="card" style="padding: 20px;">
-          <p class="card-title g">Vista previa</p>
+          <p class="card-title g">Preview</p>
           <div class="qr-preview" id="qr-preview">
             <div class="qr-placeholder">
               <div class="qr-placeholder-icon">⬡</div>
-              <p style="font-size:12px;">El QR aparecerá aquí</p>
+              <p style="font-size:12px;">The QR will appear here</p>
             </div>
           </div>
           <div id="qr-meta" class="qr-meta" style="margin-top:12px; display:none;"></div>
           <button class="btn btn-ghost" id="btn-dl-qr" onclick="descargarQR()" style="width:100%;margin-top:12px;display:none;">
-            ↓ Descargar PNG
+            ↓ Download PNG
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ CRYPTO PANEL ════════════════════════════════════ -->
   <div id="panel-crypto" class="tool-panel">
 
-    <!-- Modo -->
     <div class="toggle-group">
-      <button class="toggle-opt active" onclick="setCryptoMode('enc')" id="tog-enc">Encriptar</button>
-      <button class="toggle-opt" onclick="setCryptoMode('dec')" id="tog-dec">Desencriptar</button>
+      <button class="toggle-opt active" onclick="setCryptoMode('enc')" id="tog-enc">Encrypt</button>
+      <button class="toggle-opt" onclick="setCryptoMode('dec')" id="tog-dec">Decrypt</button>
     </div>
 
-    <!-- Encriptar -->
     <div id="crypto-enc-panel">
       <div class="card">
-        <p class="card-title v">Encriptar mensaje</p>
+        <p class="card-title v">Encrypt message</p>
         <div class="field">
-          <label>Mensaje secreto</label>
-          <textarea id="enc-mensaje" rows="4" placeholder="Escribe aquí el texto que quieres cifrar..."></textarea>
+          <label>Secret message</label>
+          <textarea id="enc-mensaje" rows="4" placeholder="Type the text you want to encrypt here..."></textarea>
         </div>
         <div class="field">
-          <label>Contraseña</label>
-          <input type="password" id="enc-password" placeholder="Clave de cifrado (guárdala bien)" />
+          <label>Password</label>
+          <input type="password" id="enc-password" placeholder="Encryption key (keep it safe)" />
         </div>
         <button class="btn btn-purple" onclick="encriptar()" id="btn-enc">
-          <span>Cifrar mensaje</span>
+          <span>Encrypt message</span>
         </button>
       </div>
 
       <div class="card">
-        <p class="card-title v">Token cifrado</p>
+        <p class="card-title v">Encrypted token</p>
         <div class="output-box muted" id="enc-output" style="padding-right:80px;">
-          El token aparecerá aquí…
-          <button class="copy-btn" onclick="copiar('enc-output')">Copiar</button>
+          The token will appear here…
+          <button class="copy-btn" onclick="copiar('enc-output')">Copy</button>
         </div>
         <div id="enc-error" class="error-banner"></div>
       </div>
     </div>
 
-    <!-- Desencriptar -->
     <div id="crypto-dec-panel" style="display:none;">
       <div class="card">
-        <p class="card-title p">Desencriptar mensaje</p>
+        <p class="card-title p">Decrypt message</p>
         <div class="field">
-          <label>Token hexadecimal</label>
-          <textarea id="dec-token" rows="4" placeholder="Pega aquí el token cifrado..."></textarea>
+          <label>Hexadecimal token</label>
+          <textarea id="dec-token" rows="4" placeholder="Paste the encrypted token here..."></textarea>
         </div>
         <div class="field">
-          <label>Contraseña</label>
-          <input type="password" id="dec-password" placeholder="La misma clave usada para cifrar" />
+          <label>Password</label>
+          <input type="password" id="dec-password" placeholder="The same key used to encrypt" />
         </div>
         <button class="btn btn-purple" onclick="desencriptar()" id="btn-dec">
-          <span>Descifrar mensaje</span>
+          <span>Decrypt message</span>
         </button>
       </div>
 
       <div class="card">
-        <p class="card-title p">Mensaje descifrado</p>
+        <p class="card-title p">Decrypted message</p>
         <div class="output-box muted" id="dec-output" style="padding-right:80px;">
-          El mensaje original aparecerá aquí…
-          <button class="copy-btn" onclick="copiar('dec-output')">Copiar</button>
+          The original message will appear here…
+          <button class="copy-btn" onclick="copiar('dec-output')">Copy</button>
         </div>
         <div id="dec-error" class="error-banner"></div>
       </div>
@@ -815,27 +805,25 @@ footer {
 
   </div>
 
-  <!-- ═══ DOWNLOADER PANEL ════════════════════════════════ -->
   <div id="panel-dl" class="tool-panel">
 
     <div class="card">
-      <p class="card-title c">URL del video</p>
+      <p class="card-title c">Video URL</p>
       <div class="field">
-        <label>Enlace</label>
-        <input type="url" id="dl-url" placeholder="https://youtube.com/watch?v=... · Twitter · Reddit · Vimeo · y más"
+        <label>Link</label>
+        <input type="url" id="dl-url" placeholder="https://youtube.com/watch?v=... · Twitter · Reddit · Vimeo · and more"
                oninput="resetDLState()" />
       </div>
 
       <div class="toggle-group" style="margin-bottom:0;">
-        <button class="toggle-opt active" onclick="setDLMode('video')" id="tog-video">Video MP4</button>
-        <button class="toggle-opt" onclick="setDLMode('audio')" id="tog-audio">Solo Audio MP3</button>
+        <button class="toggle-opt active" onclick="setDLMode('video')" id="tog-video">MP4 Video</button>
+        <button class="toggle-opt" onclick="setDLMode('audio')" id="tog-audio">MP3 Audio Only</button>
       </div>
     </div>
 
-    <!-- Preview de video -->
     <div class="video-card" id="video-card">
       <div class="video-card-inner">
-        <img id="video-thumb" class="video-thumb" src="" alt="miniatura" />
+        <img id="video-thumb" class="video-thumb" src="" alt="thumbnail" />
         <div class="video-info">
           <p class="video-title" id="video-title"></p>
           <div class="video-meta">
@@ -849,20 +837,19 @@ footer {
 
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="previewVideo()" id="btn-preview">
-        <span>Vista previa</span>
+        <span>Preview</span>
       </button>
       <button class="btn btn-cyan" onclick="iniciarDescarga()" id="btn-descargar" disabled>
-        <span>Descargar</span>
+        <span>Download</span>
       </button>
     </div>
 
-    <!-- Progreso -->
     <div id="dl-progress-wrap" style="display:none; margin-top:20px;">
       <div class="progress-wrap">
         <div class="progress-bar" id="dl-progress-bar"></div>
       </div>
       <p id="dl-progress-label" style="font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:6px; text-align:center;">
-        Descargando...
+        Downloading...
       </p>
     </div>
 
@@ -878,13 +865,13 @@ footer {
   </div>
 
   <footer>
-    AURORA SUITE · Construido con Python + Flask · Herramientas para todos
+    AURORA SUITE · Built with Python + Flask · Tools for everyone
   </footer>
 </div>
 
 <script>
 // ─── GLOBALS ──────────────────────────────────────────────
-const API = '';  // mismo origen
+const API = '';  // same origin
 let qrImageB64 = null;
 let dlMode = 'video';
 let cryptoMode = 'enc';
@@ -908,7 +895,7 @@ async function generarQR() {
   if (!datos) { shake(document.getElementById('qr-input')); return; }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Generando…';
+  btn.innerHTML = '<span class="spinner"></span> Generating…';
 
   try {
     const res = await fetch(`${API}/api/qr/generar`, {
@@ -925,7 +912,7 @@ async function generarQR() {
     preview.innerHTML = `<img src="data:image/png;base64,${qrImageB64}" alt="QR Code" />`;
 
     const meta = document.getElementById('qr-meta');
-    meta.textContent = `${data.caracteres} caracteres · versión QR ${data.version_qr} · ${data.bytes_datos} bytes`;
+    meta.textContent = `${data.caracteres} characters · QR version ${data.version_qr} · ${data.bytes_datos} bytes`;
     meta.style.display = 'block';
     document.getElementById('btn-dl-qr').style.display = 'block';
 
@@ -934,7 +921,7 @@ async function generarQR() {
       `<div class="qr-placeholder"><div class="qr-placeholder-icon" style="border-color:var(--danger)">✕</div><p style="color:var(--danger);font-size:12px;">${e.message}</p></div>`;
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>Generar QR</span>';
+    btn.innerHTML = '<span>Generate QR</span>';
   }
 }
 
@@ -943,7 +930,7 @@ function limpiarQR() {
   document.getElementById('qr-preview').innerHTML = `
     <div class="qr-placeholder">
       <div class="qr-placeholder-icon">⬡</div>
-      <p style="font-size:12px;">El QR aparecerá aquí</p>
+      <p style="font-size:12px;">The QR will appear here</p>
     </div>`;
   document.getElementById('qr-meta').style.display = 'none';
   document.getElementById('btn-dl-qr').style.display = 'none';
@@ -977,7 +964,7 @@ async function encriptar() {
   if (!mensaje || !password) { shake(btn); return; }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Cifrando…';
+  btn.innerHTML = '<span class="spinner"></span> Encrypting…';
   err.classList.remove('visible');
 
   try {
@@ -990,7 +977,7 @@ async function encriptar() {
     if (data.error) throw new Error(data.error);
 
     out.classList.remove('muted', 'error');
-    out.innerHTML = `${data.token}<button class="copy-btn" onclick="copiar('enc-output')">Copiar</button>`;
+    out.innerHTML = `${data.token}<button class="copy-btn" onclick="copiar('enc-output')">Copy</button>`;
     out.style.color = 'var(--aurora-g)';
   } catch (e) {
     err.textContent = e.message;
@@ -998,7 +985,7 @@ async function encriptar() {
     err.innerHTML = `<span>✕</span><span>${e.message}</span>`;
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>Cifrar mensaje</span>';
+    btn.innerHTML = '<span>Encrypt message</span>';
   }
 }
 
@@ -1012,7 +999,7 @@ async function desencriptar() {
   if (!token || !password) { shake(btn); return; }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Descifrando…';
+  btn.innerHTML = '<span class="spinner"></span> Decrypting…';
   err.classList.remove('visible');
 
   try {
@@ -1025,14 +1012,14 @@ async function desencriptar() {
     if (data.error) throw new Error(data.error);
 
     out.classList.remove('muted', 'error');
-    out.innerHTML = `${data.mensaje}<button class="copy-btn" onclick="copiar('dec-output')">Copiar</button>`;
+    out.innerHTML = `${data.mensaje}<button class="copy-btn" onclick="copiar('dec-output')">Copy</button>`;
     out.style.color = 'var(--aurora-p)';
   } catch (e) {
     err.innerHTML = `<span>✕</span><span>${e.message}</span>`;
     err.classList.add('visible');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>Descifrar mensaje</span>';
+    btn.innerHTML = '<span>Decrypt message</span>';
   }
 }
 
@@ -1058,7 +1045,7 @@ async function previewVideo() {
   if (!url) { shake(document.getElementById('dl-url')); return; }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Obteniendo info…';
+  btn.innerHTML = '<span class="spinner"></span> Getting info…';
 
   try {
     const res = await fetch(`${API}/api/downloader/info`, {
@@ -1086,7 +1073,7 @@ async function previewVideo() {
     document.getElementById('dl-error').classList.add('visible');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>Vista previa</span>';
+    btn.innerHTML = '<span>Preview</span>';
   }
 }
 
@@ -1096,12 +1083,12 @@ async function iniciarDescarga() {
 
   const btn = document.getElementById('btn-descargar');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Iniciando…';
+  btn.innerHTML = '<span class="spinner"></span> Starting…';
   document.getElementById('dl-success').classList.remove('visible');
   document.getElementById('dl-error').classList.remove('visible');
   document.getElementById('dl-progress-wrap').style.display = 'block';
   document.getElementById('dl-progress-bar').style.width = '0%';
-  document.getElementById('dl-progress-label').textContent = 'Conectando…';
+  document.getElementById('dl-progress-label').textContent = 'Connecting…';
 
   try {
     await fetch(`${API}/api/downloader/descargar`, {
@@ -1110,30 +1097,30 @@ async function iniciarDescarga() {
       body: JSON.stringify({url, modo: dlMode})
     });
 
-    // Polling de estado
+    // Status polling
     dlPolling = setInterval(async () => {
       const r = await fetch(`${API}/api/downloader/estado`);
       const estado = await r.json();
 
       document.getElementById('dl-progress-bar').style.width = `${estado.progreso}%`;
       document.getElementById('dl-progress-label').textContent = 
-        estado.estado === 'descargando' ? `${estado.progreso}% descargado…` : estado.estado;
+        estado.estado === 'descargando' ? `${estado.progreso}% downloaded…` : estado.estado;
 
       if (estado.estado === 'completado') {
         clearInterval(dlPolling);
         document.getElementById('dl-progress-wrap').style.display = 'none';
         document.getElementById('dl-success-msg').textContent = 
-          `✦ Descarga completa: ${estado.resultado.titulo} · ${estado.resultado.tamanio_mb} MB · ${estado.resultado.ruta}`;
+          `✦ Download complete: ${estado.resultado.titulo} · ${estado.resultado.tamanio_mb} MB · ${estado.resultado.ruta}`;
         document.getElementById('dl-success').classList.add('visible');
         btn.disabled = false;
-        btn.innerHTML = '<span>Descargar</span>';
+        btn.innerHTML = '<span>Download</span>';
       } else if (estado.estado === 'error') {
         clearInterval(dlPolling);
         document.getElementById('dl-progress-wrap').style.display = 'none';
         document.getElementById('dl-error-msg').textContent = estado.error;
         document.getElementById('dl-error').classList.add('visible');
         btn.disabled = false;
-        btn.innerHTML = '<span>Descargar</span>';
+        btn.innerHTML = '<span>Download</span>';
       }
     }, 800);
 
@@ -1141,7 +1128,7 @@ async function iniciarDescarga() {
     document.getElementById('dl-error-msg').textContent = e.message;
     document.getElementById('dl-error').classList.add('visible');
     btn.disabled = false;
-    btn.innerHTML = '<span>Descargar</span>';
+    btn.innerHTML = '<span>Download</span>';
   }
 }
 
@@ -1152,7 +1139,7 @@ async function copiar(id) {
   try {
     await navigator.clipboard.writeText(text);
     const btn = el.querySelector('.copy-btn');
-    if (btn) { btn.textContent = '¡Copiado!'; setTimeout(() => btn.textContent = 'Copiar', 1500); }
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1500); }
   } catch {}
 }
 
@@ -1163,7 +1150,7 @@ function shake(el) {
   setTimeout(() => el.style.animation = '', 350);
 }
 
-// Animación shake
+// Shake animation
 const style = document.createElement('style');
 style.textContent = `
   @keyframes shake {
@@ -1176,7 +1163,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Enter en inputs
+// Enter key on inputs
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.ctrlKey) {
     const active = document.querySelector('.tool-panel.active');
